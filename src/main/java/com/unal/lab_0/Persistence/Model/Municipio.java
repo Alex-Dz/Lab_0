@@ -1,8 +1,9 @@
 package com.unal.lab_0.Persistence.Model;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity

@@ -1,9 +1,10 @@
 package com.unal.lab_0.Persistence.Model;
 
-import jakarta.persistence.*;
+
 import lombok.Builder;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -24,7 +25,7 @@ public class Persona {
 
     /* ----- RELATIONSHIPS ----- */
 
-    @OneToMany(mappedBy = "vivienda", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cabezaDeFamilia", cascade = CascadeType.ALL)
     private List<Persona> personasACargo;
 
     @ManyToOne(fetch = FetchType.LAZY)
