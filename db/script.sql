@@ -125,8 +125,8 @@ GO
 create table MUNICIPIO (
    id_mun               int                  not null,
    nombre               varchar(45)          not null,
-   area                 decimal(18,2)        null,
-   presupesto           int                  null,
+   area                 float        null,
+   presupuesto           int                  null,
    constraint PK_MUNICIPIO primary key (id_mun)
 )
 go
