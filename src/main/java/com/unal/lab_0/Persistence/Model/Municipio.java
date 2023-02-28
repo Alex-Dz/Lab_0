@@ -3,7 +3,6 @@ package com.unal.lab_0.Persistence.Model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity

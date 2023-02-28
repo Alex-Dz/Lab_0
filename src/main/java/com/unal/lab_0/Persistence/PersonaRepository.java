@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonaRepository extends CrudRepository<Persona, Integer> {
+    Persona findByNombreContains(String nombre);
 }
