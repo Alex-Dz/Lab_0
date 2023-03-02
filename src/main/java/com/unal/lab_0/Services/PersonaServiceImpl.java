@@ -6,6 +6,9 @@ import com.unal.lab_0.Services.Interfaces.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class PersonaServiceImpl implements PersonaService {
 
@@ -44,5 +47,12 @@ public class PersonaServiceImpl implements PersonaService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public List<Persona> getAllPersonas() throws Exception {
+        //List<Persona> personas = new ArrayList<Persona>();
+        //personas = personaRepo.findAll().forEach(personas::add);
+        return personaRepo.findAllBy();
     }
 }

@@ -2,7 +2,7 @@ package com.unal.lab_0.Persistence.Model;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
