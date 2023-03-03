@@ -8,7 +8,7 @@ public interface ViviendaService {
 
     public Vivienda create(Vivienda viviendaToCreate) throws Exception;
 
-    public Vivienda findByNombre(String nombre) throws Exception;
+    public Vivienda findByDireccion(String direccion) throws Exception;
 
     public Vivienda edit(Vivienda viviendaToEdit) throws Exception;
 
