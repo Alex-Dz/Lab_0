@@ -91,6 +91,7 @@ public class PersonaController {
         try {
             mv.getModel().put("personas", personaService.getAllPersonas());
             mv.getModel().put("personaToSave", personaService.getById(id));
+            mv.getModel().put("edit", true);
         } catch (Exception e) {
             mv.getModel().put("error", "something was wrong, try again");
         }
