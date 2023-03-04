@@ -17,7 +17,7 @@ public class Persona {
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "telefono")
-    private Integer telefono;
+    private String telefono;
     @Column(name = "edad")
     private Integer edad;
     @Column(name = "sexo")
@@ -48,7 +48,7 @@ public class Persona {
     public Persona() {
     }
 
-    public Persona(Integer id, String nombre, Integer telefono, Integer edad, String sexo, Municipio municipio, Vivienda vivienda) {
+    public Persona(Integer id, String nombre, String telefono, Integer edad, String sexo, Municipio municipio, Vivienda vivienda) {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;

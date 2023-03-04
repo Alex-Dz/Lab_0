@@ -8,7 +8,9 @@ public interface PersonaService {
 
     public Persona create(Persona personaToCreate) throws Exception;
 
-    public Persona findByNombre(String nombre) throws Exception;
+    public Persona getByNombre(String nombre) throws Exception;
+
+    public Persona getById(Integer id) throws Exception;
 
     public Persona edit(Persona personaToEdit) throws Exception;
 

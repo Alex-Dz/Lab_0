@@ -9,6 +9,4 @@ import java.util.List;
 @Repository
 public interface PersonaRepository extends CrudRepository<Persona, Integer> {
     Persona findByNombreContains(String nombre);
-
-    List<Persona> findAllBy();
 }

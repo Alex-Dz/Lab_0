@@ -125,8 +125,8 @@ GO
 create table MUNICIPIO (
    id_mun               int                  not null,
    nombre               varchar(45)          not null,
-   area                 float        null,
-   presupuesto           int                  null,
+   area                 float                null,
+   presupuesto          int                  null,
    constraint PK_MUNICIPIO primary key (id_mun)
 )
 go
@@ -140,7 +140,7 @@ create table PERSONA (
    id_viv               int                  null,
    id_mun               int                  null,
    nombre               varchar(45)          not null,
-   telefono             int                  null,
+   telefono             varchar(30)          null,
    edad                 int                  not null,
    sexo                 varchar(45)          null,
    constraint PK_PERSONA primary key (di)

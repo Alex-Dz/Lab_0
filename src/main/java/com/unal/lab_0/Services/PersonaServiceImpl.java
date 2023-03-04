@@ -25,9 +25,18 @@ public class PersonaServiceImpl implements PersonaService {
     }
 
     @Override
-    public Persona findByNombre(String nombre) throws Exception {
+    public Persona getByNombre(String nombre) throws Exception {
         try {
             return personaRepo.findByNombreContains(nombre);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public Persona getById(Integer id) throws Exception {
+        try {
+            return personaRepo.findById(id).get();
         } catch (Exception e) {
             throw e;
         }
@@ -51,8 +60,8 @@ public class PersonaServiceImpl implements PersonaService {
 
     @Override
     public List<Persona> getAllPersonas() throws Exception {
-        //List<Persona> personas = new ArrayList<Persona>();
-        //personas = personaRepo.findAll().forEach(personas::add);
-        return personaRepo.findAllBy();
+        List<Persona> personas = new ArrayList<Persona>();
+        personaRepo.findAll().forEach(personas::add);
+        return personas;
     }
 }
