@@ -85,16 +85,29 @@ public class PersonaController {
         return mv;
     }
 
-    @PostMapping("/update")
-    public ModelAndView editPersona(@ModelAttribute(name = "personaToEdit") Persona personaToEdit,ModelAndView mv) {
-        mv.setViewName("personaTemplate.html");
+    @GetMapping("/edit/{id}")
+    public ModelAndView editForm(ModelAndView mv, @PathVariable("id") Integer id) {
+        mv.setViewName("personaTemplate");
         try {
-            mv.getModel().put("editPersona", personaService.edit(personaToEdit));
+            mv.getModel().put("personas", personaService.getAllPersonas());
+            mv.getModel().put("personaToSave", personaService.getById(id));
         } catch (Exception e) {
-            mv.getModel().put("error", "Failed saving register");
-            System.err.println(e.getMessage());
+            mv.getModel().put("error", "something was wrong, try again");
         }
         return mv;
+    }
+
+    @PostMapping("/update")
+    public ModelAndView editPersona(@ModelAttribute(name = "personaToSave") Persona personaToSave, ModelAndView mv) {
+        //mv.setViewName("personaTemplate");
+        try {
+            mv.getModel().put("editPersona", personaService.edit(personaToSave));
+        } catch (Exception e) {
+            //mv.getModel().put("error", "Failed saving register");
+            System.err.println(e.getMessage());
+            return new ModelAndView("redirect:/persona/all?error=failed updating the register");
+        }
+        return new ModelAndView("redirect:/persona/all?success=register updated");
     }
 
     @GetMapping("/delete/{id}")
