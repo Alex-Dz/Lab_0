@@ -65,17 +65,16 @@ public class ViviendaController {
         }
         return mv;
     }
-
-    @PostMapping("new")
-    public ModelAndView delVivienda(@ModelAttribute(name = "viviendaToDelete") Integer idToDelete) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("viviendaTemplate.html");
+    @GetMapping("/delete/{id}")
+    public ModelAndView delVivienda(@PathVariable(name = "viviendaToDelete") Integer idToDelete,ModelAndView mv) {
+        //mv.setViewName("personaTemplate.html");
         try {
-            mv.getModel().put("delVivienda", viviendaService.delete(idToDelete));
+            viviendaService.delete(idToDelete);
         } catch (Exception e) {
-            mv.getModel().put("error", "Failed deleting register");
+            //mv.getModel().put("error", "Failed deleting register");
             System.err.println(e.getMessage());
+            return new ModelAndView("redirect:/vivienda/all?error=failed deleting");
         }
-        return mv;
+        return new ModelAndView("redirect:/vivienda/all?success=register deleted");
     }
 }

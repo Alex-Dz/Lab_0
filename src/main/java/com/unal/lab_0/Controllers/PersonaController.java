@@ -85,9 +85,8 @@ public class PersonaController {
         return mv;
     }
 
-    @PostMapping("update")
-    public ModelAndView editPersona(@ModelAttribute(name = "personaToEdit") Persona personaToEdit) {
-        ModelAndView mv = new ModelAndView();
+    @PostMapping("/update")
+    public ModelAndView editPersona(@ModelAttribute(name = "personaToEdit") Persona personaToEdit,ModelAndView mv) {
         mv.setViewName("personaTemplate.html");
         try {
             mv.getModel().put("editPersona", personaService.edit(personaToEdit));
@@ -98,16 +97,16 @@ public class PersonaController {
         return mv;
     }
 
-    @PostMapping("delete")
-    public ModelAndView delPersona(@ModelAttribute(name = "personaToDelete") Integer idToDelete) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("personaTemplate.html");
+    @GetMapping("/delete/{id}")
+    public ModelAndView delPersona(@PathVariable (name = "id") Integer idToDelete,ModelAndView mv) {
+        //mv.setViewName("personaTemplate.html");
         try {
-            mv.getModel().put("delPersona", personaService.delete(idToDelete));
+            personaService.delete(idToDelete);
         } catch (Exception e) {
-            mv.getModel().put("error", "Failed deleting register");
+            //mv.getModel().put("error", "Failed deleting register");
             System.err.println(e.getMessage());
+            return new ModelAndView("redirect:/persona/all?error=failed deleting");
         }
-        return mv;
+        return new ModelAndView("redirect:/persona/all?success=register deleted");
     }
 }
