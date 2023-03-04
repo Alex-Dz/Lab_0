@@ -34,12 +34,13 @@ public class PersonaController {
         mv.setViewName("personaTemplate");
         try {
             personaService.create(personaToSave);
-            mv.getModel().put("success", "register created");
+            //mv.getModel().put("success", "register created");
         } catch (Exception e) {
-            mv.getModel().put("error", "Failed saving register");
+            //mv.getModel().put("error", "Failed saving register");
             System.err.println(e.getMessage());
+            return new ModelAndView("redirect:/persona/all?error=Failed saving register");
         }
-        return mv;
+        return new ModelAndView("redirect:/persona/all?success=register created");
     }
 
     @GetMapping("/{id}")
