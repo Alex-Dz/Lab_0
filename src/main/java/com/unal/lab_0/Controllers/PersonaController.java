@@ -4,10 +4,6 @@ import com.unal.lab_0.Persistence.Model.Persona;
 import com.unal.lab_0.Services.Interfaces.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-
-
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +22,7 @@ public class PersonaController {
         mv.setViewName("personaTemplate");
         try {
             mv.getModel().put("personas", personaService.getAllPersonas());
+            mv.getModel().put("personaToSave", new Persona());
         } catch (Exception e) {
             mv.getModel().put("error", "something was wrong, try again");
         }
