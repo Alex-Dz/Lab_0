@@ -4,31 +4,38 @@ import com.unal.lab_0.Persistence.Model.Persona;
 import com.unal.lab_0.Services.Interfaces.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller("/persona")
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+@RequestMapping("/persona")
 public class PersonaController {
 
     @Autowired
-    PersonaService personaService;
+    private PersonaService personaService;
 
     @GetMapping("/all")
-    public ModelAndView getAllPersonas(){
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("personaTemplate.html");
+    public ModelAndView getAllPersonas(ModelAndView mv){
+        //ModelAndView mv = new ModelAndView();
+        mv.setViewName("personaTemplate");
         try {
             mv.getModel().put("personas",personaService.getAllPersonas());
+            //model.addAttribute("personas",personaService.getAllPersonas());
         } catch (Exception e) {
-            mv.getModel().put("personas",null);
+            mv.getModel().put("personas",new ArrayList<Persona>());
+            //model.addAttribute("personas",null);
         }
+        //return "personaTemplate";
         return mv;
     }
-    @PostMapping("new")
+    /*@PostMapping("new")
     public ModelAndView newPersona(@ModelAttribute(name = "personaToSave") Persona personaToSave) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("personaTemplate.html");
@@ -38,17 +45,24 @@ public class PersonaController {
             mv.getModel().put("error", "Failed saving register");
             System.err.println(e.getMessage());
         }
-        return mv;
-    }
+        //return mv;
+        return "personaTemplate";
+    }*/
 
-    @GetMapping("one")
-    public ModelAndView getByNombre(@ModelAttribute(name = "personaToFind") String personaTofind){
+    @GetMapping("/{name}")
+    public ModelAndView getByNombre(@PathVariable(name = "name") String personaTofind){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("personaTemplate.html");
         try {
-            mv.getModel().put("nombrePersona", personaService.findByNombre(personaTofind));
+            List<Persona> personas = new ArrayList<>();
+            Persona persona = personaService.findByNombre(personaTofind);
+            if (persona != null) {
+                personas.add(persona);
+                mv.getModel().put("personas", personas);
+            }
+            mv.getModel().put("personas", null);
         } catch (Exception e){
-            mv.getModel().put("error", "Person not found");
+            mv.getModel().put("personas", null);
             System.err.println(e.getMessage());
         }
         return mv;
