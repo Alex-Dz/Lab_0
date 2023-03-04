@@ -1,6 +1,5 @@
 package com.unal.lab_0.Services.Interfaces;
 
-import com.unal.lab_0.Persistence.Model.Persona;
 import com.unal.lab_0.Persistence.Model.Vivienda;
 
 import java.util.List;
