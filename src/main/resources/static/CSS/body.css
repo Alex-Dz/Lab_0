@@ -1,0 +1,36 @@
+html, body{
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.text-center {
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+label {
+    margin-top: 8px;
+}
+
+label:nth-child(1){
+    margin-top: 0;
+}
+
+input[type="number"]{
+    -webkit-appearance: textfield;
+    margin: 0;
+    -moz-appearance: textfield;
+}
+
+.box-footer{
+    margin-top: 1rem;
+}
+
+.title-table{
+    margin-top: 1rem;
+}
+
+.table-view a {
+    color: cornflowerblue;
+}

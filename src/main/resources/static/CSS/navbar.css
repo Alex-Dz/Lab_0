@@ -1,0 +1,52 @@
+body{
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.navbar{
+    display: flex;
+    justify-content: flex-start;
+    background-color: darkslategray;
+    color: beige;
+    width: 100%;
+}
+
+.navbar-brand {
+    display: flex;
+    font-size: x-large;
+    justify-content: flex-start;
+    margin: 0 0 0 20px;
+    color: aliceblue;
+}
+
+.navbar-brand:hover{
+    color: antiquewhite;
+}
+
+.navbar-list-menu{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-list-menu li{
+    list-style: none;
+    font-size: medium;
+    font-weight: bold;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    margin: 0 1rem 0 1rem;
+    height: min-content;
+    border: 0;
+}
+
+a {
+    text-decoration: none;
+    color: beige;
+}
+a:hover {
+    color: bisque;
+    cursor: pointer;
+}
