@@ -33,7 +33,10 @@ public class PersonaController {
     public ModelAndView newPersona(ModelAndView mv, @ModelAttribute(name = "personaToSave") Persona personaToSave) {
         mv.setViewName("personaTemplate");
         try {
-            personaService.create(personaToSave);
+            if (!personaService.existById(personaToSave.getId()))
+                personaService.create(personaToSave);
+            else
+                return new ModelAndView("redirect:/persona/all?error=register already exists");
             //mv.getModel().put("success", "register created");
         } catch (Exception e) {
             //mv.getModel().put("error", "Failed saving register");

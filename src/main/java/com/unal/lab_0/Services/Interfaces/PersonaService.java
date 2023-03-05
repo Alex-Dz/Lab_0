@@ -17,4 +17,6 @@ public interface PersonaService {
     public Persona delete(Integer id) throws Exception;
 
     public List<Persona> getAllPersonas() throws Exception;
+
+    public Boolean existById(Integer id) throws Exception;
 }

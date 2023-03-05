@@ -64,4 +64,15 @@ public class PersonaServiceImpl implements PersonaService {
         personaRepo.findAll().forEach(personas::add);
         return personas;
     }
+
+    @Override
+    public Boolean existById(Integer id) throws Exception {
+        try{
+            return personaRepo.existsById(id);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+
 }
