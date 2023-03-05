@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+          crossorigin="anonymous">
+    <title>Crud Personas</title>
+</head>
+<body>
+
+    <section class="navbar">
+        <nav class="table-header">
+            <a class="navbar-brand" href="#">Control de Propiedades</a>
+            <div class="navbar-collapse" id="collapse-navbar">
+                <ul class="navbar-list-menu">
+                    <li class="navbar-item">
+                        <a class="navbar-link" th:href="@{/personaTemplate.html}">Perosnas</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+
+    <section class="container">
+        <div class="row">
+            <h1 class="text-center">Personas</h1>
+        </div>
+
+        <section class="container formulario">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                    <h2 class="text-center">Registro de personas</h2>
+                    <div class="card-body">
+                        <form th:action="${edit} ? @{/persona/update} : @{/persona/new}" th:object="${personaToSave}" method="POST">
+                            <div class="form-group">
+                                <label for="documento">Documento Identidad: </label>
+                                <input type="number" name="documento" id="documento" th:field="*{id}" class="form-control" placeholder="Documento" required>
+                                <label for="nombre">Nombre: </label>
+                                <input type="text" name="nombre" id="nombre" th:field="*{nombre}" class="form-control" placeholder="Tu nombre" required>
+                                <label for="telefono">Telefono: </label>
+                                <input type="text" name="telefono" id="telefono" th:field="*{telefono}" class="form-control" placeholder="123456" required>
+                                <label for="edad">Edad: </label>
+                                <input type="number" name="edad" id="edad" th:field="*{edad}" class="form-control" placeholder="18" required>
+                                <label for="sexo">Sexo: </label>
+                                <input type="text" name="sexo" id="sexo" th:field="*{sexo}" class="form-control" placeholder="Masculino o Femenino" required>
+                            </div>
+                            <div class="box-footer">
+                                <button class="btn btn-success">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <h2>Lista de personas</h2>
+        <table class="table table-striped table-sm">
+            <caption>List of users</caption>
+
+            <thead class="table-header">
+                <tr>
+                    <th>id</th>
+                    <th>nombre</th>
+                    <th>telefono</th>
+                    <th>edad</th>
+                    <th>sexo</th>
+                    <th>editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <div th:if="${personas} != null ">
+                    <tr th:each="persona : ${personas}">
+                        <td th:text="${persona.id}">id</td>
+                        <td th:text="${persona.nombre}">nombre</td>
+                        <td th:text="${persona.telefono}">telefono</td>
+                        <td th:text="${persona.edad}">edad</td>
+                        <td th:text="${persona.sexo}">sexo</td>
+                        <td><a th:href="'/persona/edit/' + ${persona.id}">editar</a></td>
+                    </tr>
+                </div>
+            </tbody>
+        </table>
+        <div th:if="${error} != null">
+            <div class="alert alert-danger" role="alert" th:text="${error}">
+            </div>
+        </div>
+        <div th:if="${success} != null">
+            <div class="alert alert-success" role="alert" th:text="${success}">
+            </div>
+        </div>
+    </section>
+</body>
+</html>
