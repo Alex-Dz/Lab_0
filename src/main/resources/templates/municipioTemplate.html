@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+          crossorigin="anonymous">
+    <title>Crud Personas</title>
+</head>
+<body>
+
+<section class="navbar">
+    <nav class="table-header">
+        <a class="navbar-brand" href="#">Control de Propiedades</a>
+        <div class="navbar-collapse" id="collapse-navbar">
+            <ul class="navbar-list-menu">
+                <li class="navbar-item">
+                    <a class="navbar-link" th:href="@{/persona/all}">Perosnas</a>
+                    <a class="navbar-link" th:href="@{/vivienda/all}">Viviendas</a>
+                    <a class="navbar-link" th:href="@{/municipio/all}">Municipio</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</section>
+
+<section class="container">
+    <div class="row">
+        <h1 class="text-center">Municipios</h1>
+    </div>
+
+    <section class="container formulario">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                <h2 class="text-center">Registro de municipios</h2>
+                <div class="card-body">
+                    <form th:action="${edit} ? @{/municipio/update} : @{/municipio/new}" th:object="${municipioToSave}" method="POST">
+                        <div class="form-group">
+                            <label for="codigo">Código Municipio: </label>
+                            <input type="number" name="codigo" id="codigo" th:field="*{id}" class="form-control" placeholder="1023" required>
+                            <label for="nombre">Nombre: </label>
+                            <input type="text" name="nombre" id="nombre" th:field="*{nombre}" class="form-control" placeholder="Municipio" required>
+                            <label for="area">Área: </label>
+                            <input type="number" name="area" id="area" th:field="*{area}" class="form-control" placeholder="15" required>
+                            <label for="presupuesto">Presupuesto: </label>
+                            <input type="number" name="presupuesto" id="presupuesto" th:field="*{presupuesto}" class="form-control" placeholder="18000" required>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-success">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <h2>Lista de municipios</h2>
+    <table class="table table-striped table-sm">
+        <caption>Registros de municipios</caption>
+
+        <thead class="table-header">
+        <tr>
+            <th>id</th>
+            <th>nombre</th>
+            <th>area</th>
+            <th>presupuesto</th>
+            <th>editar</th>
+            <th>eliminar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:if="${municipios} != null ">
+            <tr th:each="municipio : ${municipios}">
+                <td th:text="${municipio.id}">id</td>
+                <td th:text="${municipio.nombre}">nombre</td>
+                <td th:text="${municipio.area}">telefono</td>
+                <td th:text="${municipio.presupuesto}">edad</td>
+                <td><a th:href="'/municipio/edit/' + ${municipio.id}">editar</a></td>
+                <td><a th:href="'/municipio/delete/' + ${municipio.id}">eliminar</a></td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+    <div th:if="${error} != null">
+        <div class="alert alert-danger" role="alert" th:text="${error}">
+        </div>
+    </div>
+    <div th:if="${success} != null">
+        <div class="alert alert-success" role="alert" th:text="${success}">
+        </div>
+    </div>
+</section>
+</body>
+</html>
