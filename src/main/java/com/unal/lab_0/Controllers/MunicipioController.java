@@ -3,12 +3,15 @@ package com.unal.lab_0.Controllers;
 import com.unal.lab_0.Persistence.Model.Municipio;
 import com.unal.lab_0.Services.Interfaces.MunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
+@RequestMapping("/municipio")
 public class MunicipioController {
     @Autowired
     private MunicipioService municipioService;
@@ -17,9 +20,10 @@ public class MunicipioController {
     public ModelAndView getAllMunicipios(ModelAndView mv){
         mv.setViewName("municipioTemplate");
         try {
-            mv.getModel().put("municipios",municipioService.getAllMunicipios());
+            mv.getModel().put("municipios", municipioService.getAllMunicipios());
+            mv.getModel().put("municipioToSave", new Municipio());
         } catch (Exception e) {
-            mv.getModel().put("municipios",new ArrayList<Municipio>());
+            mv.getModel().put("error", "something was wrong, try again");
         }
         return mv;
     }
@@ -27,15 +31,15 @@ public class MunicipioController {
     public ModelAndView newMunicipio(@ModelAttribute(name = "municipioToSave") Municipio municipioToSave, ModelAndView mv) {
         mv.setViewName("municipioTemplate.html");
         try {
-            mv.getModel().put("newMunicipio", municipioService.create(municipioToSave));
+            municipioService.create(municipioToSave);
         } catch (Exception e) {
-            mv.getModel().put("error", "Failed saving register");
             System.err.println(e.getMessage());
+            return new ModelAndView("redirect:/municipio/all?error=Failed saving register");
         }
-        return mv;
+        return new ModelAndView("redirect:/municipio/all?success=Register created");
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/find/{name}")
     public ModelAndView getByNombre(@PathVariable(name = "name") String municipioTofind, ModelAndView mv){
         mv.setViewName("municipioTemplate.html");
         try {
@@ -43,11 +47,14 @@ public class MunicipioController {
             Municipio municipio = municipioService.findByNombre(municipioTofind);
             if (municipio != null) {
                 municipios.add(municipio);
-                mv.getModel().put("municipio", municipios);
+                mv.getModel().put("municipios", municipios);
+            } else {
+                mv.getModel().put("municipios", null);
+                mv.getModel().put("error", "register not found");
             }
-            mv.getModel().put("municipio", null);
-        } catch (Exception e){
-            mv.getModel().put("municipio", null);
+        } catch (Exception e) {
+            mv.getModel().put("municipios", null);
+            mv.getModel().put("error", "register not found");
             System.err.println(e.getMessage());
         }
         return mv;
@@ -73,8 +80,8 @@ public class MunicipioController {
         } catch (Exception e) {
             //mv.getModel().put("error", "Failed deleting register");
             System.err.println(e.getMessage());
-            return new ModelAndView("redirect:/municipio/all?error=failed deleting");
+            return new ModelAndView("redirect:/municipio/all?error=Failed deleting");
         }
-        return new ModelAndView("redirect:/municipio/all?success=register deleted");
+        return new ModelAndView("redirect:/municipio/all?success=Register deleted");
     }
 }

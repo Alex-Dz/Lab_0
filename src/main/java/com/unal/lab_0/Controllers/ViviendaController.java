@@ -3,59 +3,66 @@ import com.unal.lab_0.Persistence.Model.Vivienda;
 import com.unal.lab_0.Services.Interfaces.ViviendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller("/vivienda")
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+@RequestMapping("/vivienda")
 public class ViviendaController {
 
     @Autowired
     ViviendaService viviendaService;
 
     @GetMapping("/all")
-    public ModelAndView getAllViviendas(){
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("viviendaTemplate.html");
+    public ModelAndView getAllViviendas(ModelAndView mv){
+        mv.setViewName("viviendaTemplate");
         try {
-            mv.getModel().put("viviendas",viviendaService.getAllViviendas());
+            mv.getModel().put("viviendas", viviendaService.getAllViviendas());
+            mv.getModel().put("viviendaToSave", new Vivienda());
         } catch (Exception e) {
-            mv.getModel().put("viviendas",null);
+            mv.getModel().put("error", "something was wrong, try again");
         }
         return mv;
     }
     @PostMapping("new")
     public ModelAndView newPersona(@ModelAttribute(name = "viviendaToSave") Vivienda viviendaToSave) {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("viviendaTemplate.html");
         try {
-            mv.getModel().put("newVivienda", viviendaService.create(viviendaToSave));
+            viviendaService.create(viviendaToSave);
         } catch (Exception e) {
-            mv.getModel().put("error", "Failed saving register");
             System.err.println(e.getMessage());
+            return new ModelAndView("redirect:/vivienda/all?error=Failed saving register");
         }
-        return mv;
+        return new ModelAndView("redirect:/vivienda/all?success=Register created");
     }
 
-    @GetMapping("one")
-    public ModelAndView getByDireccion(@ModelAttribute(name = "personaToFind") String viviendaTofind){
-        ModelAndView mv = new ModelAndView();
+    @GetMapping("/find/{direccion}")
+    public ModelAndView getByDireccion(ModelAndView mv,@PathVariable(name = "direccion") String viviendaTofind){
         mv.setViewName("viviendaTemplate.html");
         try {
-            mv.getModel().put("dirVivienda", viviendaService.findByDireccion(viviendaTofind));
-        } catch (Exception e){
-            mv.getModel().put("error", "Vivienda not found");
+            List<Vivienda> viviendas = new ArrayList<>();
+            Vivienda vivienda = viviendaService.findByDireccion(viviendaTofind);
+            if (vivienda != null) {
+                viviendas.add(vivienda);
+                mv.getModel().put("viviendas", viviendas);
+            } else {
+                mv.getModel().put("viviendas", null);
+                mv.getModel().put("error", "register not found");
+            }
+        } catch (Exception e) {
+            mv.getModel().put("viviendas", null);
+            mv.getModel().put("error", "register not found");
             System.err.println(e.getMessage());
         }
         return mv;
     }
 
-    @PostMapping("update")
-    public ModelAndView editVivienda(@ModelAttribute(name = "personaToEdit") Vivienda viviendaToEdit) {
-        ModelAndView mv = new ModelAndView();
+    @PostMapping("/update")
+    public ModelAndView editVivienda(@ModelAttribute(name = "personaToEdit") Vivienda viviendaToEdit,ModelAndView mv) {
         mv.setViewName("viviendaTemplate.html");
         try {
             mv.getModel().put("editVivienda", viviendaService.edit(viviendaToEdit));
@@ -73,8 +80,8 @@ public class ViviendaController {
         } catch (Exception e) {
             //mv.getModel().put("error", "Failed deleting register");
             System.err.println(e.getMessage());
-            return new ModelAndView("redirect:/vivienda/all?error=failed deleting");
+            return new ModelAndView("redirect:/vivienda/all?error=Failed deleting");
         }
-        return new ModelAndView("redirect:/vivienda/all?success=register deleted");
+        return new ModelAndView("redirect:/vivienda/all?success=Register deleted");
     }
 }

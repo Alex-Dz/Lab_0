@@ -122,8 +122,8 @@ public class PersonaController {
         } catch (Exception e) {
             //mv.getModel().put("error", "Failed deleting register");
             System.err.println(e.getMessage());
-            return new ModelAndView("redirect:/persona/all?error=failed deleting");
+            return new ModelAndView("redirect:/persona/all?error=Failed deleting");
         }
-        return new ModelAndView("redirect:/persona/all?success=register deleted");
+        return new ModelAndView("redirect:/persona/all?success=Register deleted");
     }
 }
