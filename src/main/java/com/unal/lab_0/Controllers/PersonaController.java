@@ -18,11 +18,16 @@ public class PersonaController {
     private PersonaService personaService;
 
     @GetMapping("/all")
-    public ModelAndView getAllPersonas(ModelAndView mv, String successMsg, String errorMsg) {
+    public ModelAndView getAllPersonas(ModelAndView mv, Persona personaToSave, String successMsg, String errorMsg) {
         mv.setViewName("personaTemplate");
         try {
             mv.getModel().put("personas", personaService.getAllPersonas());
-            mv.getModel().put("personaToSave", new Persona());
+            if (personaToSave == null)
+                mv.getModel().put("personaToSave", new Persona());
+            else
+                mv.getModel().put("personaToSave", personaToSave);
+            mv.getModel().put("success", successMsg);
+            mv.getModel().put("error", errorMsg);
         } catch (Exception e) {
             mv.getModel().put("error", "something was wrong, try again");
         }
@@ -36,16 +41,16 @@ public class PersonaController {
             if (!personaService.existById(personaToSave.getId()))
                 personaService.create(personaToSave);
             else
-                return getAllPersonas(mv, null, "register already exists");
+                return getAllPersonas(mv, null, null, "register already exists");
                 //return new ModelAndView("redirect:/persona/all?error=register already exists");
             //mv.getModel().put("success", "register created");
         } catch (Exception e) {
             //mv.getModel().put("error", "Failed saving register");
             System.err.println(e.getMessage());
-            return getAllPersonas(mv, null, "failed saving register");
+            return getAllPersonas(mv, null, null, "failed saving register");
             //return new ModelAndView("redirect:/persona/all?error=Failed saving register");
         }
-        return getAllPersonas(mv, "register created", null);
+        return getAllPersonas(mv, null, "register created", null);
         //return new ModelAndView("redirect:/persona/all?success=register created");
     }
 
@@ -112,11 +117,11 @@ public class PersonaController {
         } catch (Exception e) {
             //mv.getModel().put("error", "Failed saving register");
             System.err.println(e.getMessage());
-            return getAllPersonas(mv, null, "failed updating the register");
+            return getAllPersonas(mv, personaToSave, null, "failed updating the register");
             //return new ModelAndView("redirect:/persona/all?error=failed updating the register");
         }
 
-        return getAllPersonas(mv, "register updated", null);
+        return getAllPersonas(mv, personaToSave, "register updated", null);
         //return new ModelAndView("redirect:/persona/all?success=register updated");
     }
 
