@@ -12,7 +12,6 @@
     <title>Crud Personas</title>
 </head>
 <body>
-
     <section class="navbar">
         <nav class="table-header">
             <a class="navbar-brand" href="#">Control de Propiedades</a>
@@ -93,6 +92,20 @@
                                 </div>
                                 <div th:if="${edit} != null or ${viviendas} == null">
                                     <select class="form-select" name="propiedades" id="propiedades" disabled>
+                                        <option th:value="null" th:text="'--Ninguna--'" selected></option>
+                                    </select>
+                                </div>
+                                <label for="gobernador">Governador de: </label>
+                                <div th:if="${municipios} != null and ${edit} == null">
+                                    <select class="form-select" name="gobernador" id="gobernador" th:field="*{municipio}">
+                                        <option th:value="null" th:text="'--Ninguna--'" selected></option>
+                                        <div th:each="municipio : ${municipios}">
+                                            <option th:value="${municipio.id}" th:text="${municipio.nombre}"></option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <div th:if="${edit} != null or ${municipios} == null">
+                                    <select class="form-select" name="CdF" id="CdF" disabled>
                                         <option th:value="null" th:text="'--Ninguna--'" selected></option>
                                     </select>
                                 </div>

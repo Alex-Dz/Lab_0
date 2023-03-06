@@ -86,7 +86,7 @@ public class MunicipioController {
     }
 
     @PostMapping("/update")
-    public ModelAndView editMunicipio(@ModelAttribute(name = "personaToEdit") Municipio municipioToEdit, ModelAndView mv) {
+    public ModelAndView editMunicipio(@ModelAttribute(name = "municipioToSave") Municipio municipioToEdit, ModelAndView mv) {
         try {
             municipioService.edit(municipioToEdit);
         } catch (Exception e) {

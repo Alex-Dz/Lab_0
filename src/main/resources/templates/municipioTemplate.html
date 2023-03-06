@@ -52,20 +52,6 @@
                             <input type="number" name="area" id="area" th:field="*{area}" class="form-control" placeholder="15" required>
                             <label for="presupuesto">Presupuesto: </label>
                             <input type="number" name="presupuesto" id="presupuesto" th:field="*{presupuesto}" class="form-control" placeholder="18000" required>
-                            <label for="governador">Governador: </label>
-                                <div th:if="${personas} != null and ${edit} == null">
-                                    <select class="form-select" name="governador" id="governador" th:field="*{persona}">
-                                        <option th:value="null" th:text="'--Ninguna--'" selected></option>
-                                        <div th:each="persona : ${personas}">
-                                            <option th:value="${persona.id}" th:text="${persona.nombre}"></option>
-                                        </div>
-                                    </select>
-                                </div>
-                                <div th:if="${edit} != null or ${personas} == null">
-                                    <select class="form-select" name="CdF" id="CdF" disabled>
-                                        <option th:value="null" th:text="'--Ninguna--'" selected></option>
-                                    </select>
-                                </div>
                         </div>
                         <div class="box-footer">
                             <button class="btn btn-success">Guardar</button>
