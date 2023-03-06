@@ -1,15 +1,16 @@
 package com.unal.lab_0.Persistence.Model;
 
 
-import lombok.Builder;
-import lombok.Data;
-
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
 @Entity
 @Table(name = "PERSONA")
-@Data
+@Getter
+@Setter
 public class Persona {
     @Id
     @Column(name = "di")
@@ -28,18 +29,18 @@ public class Persona {
     @OneToMany(mappedBy = "cabezaDeFamilia", cascade = CascadeType.ALL)
     private List<Persona> personasACargo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CdF_di", referencedColumnName = "di")
     private Persona cabezaDeFamilia;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_mun", referencedColumnName = "id_mun")
     private Municipio municipio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_viv", referencedColumnName = "id_viv")
     private Vivienda vivienda;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "PROPIEDAD",
             joinColumns = @JoinColumn(name = "di"),
             inverseJoinColumns = @JoinColumn(name = "id_viv"))
@@ -48,13 +49,32 @@ public class Persona {
     public Persona() {
     }
 
-    public Persona(Integer id, String nombre, String telefono, Integer edad, String sexo, Municipio municipio, Vivienda vivienda) {
+    public Persona(Integer id, String nombre, String telefono, Integer edad, String sexo, List<Persona> personasACargo, Persona cabezaDeFamilia, Municipio municipio, Vivienda vivienda, List<Vivienda> propiedades) {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
         this.edad = edad;
         this.sexo = sexo;
+        this.personasACargo = personasACargo;
+        this.cabezaDeFamilia = cabezaDeFamilia;
         this.municipio = municipio;
         this.vivienda = vivienda;
+        this.propiedades = propiedades;
+    }
+
+    @Override
+    public final String toString() {
+        return "Persona{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", edad=" + edad +
+                ", sexo='" + sexo + '\'' +
+                ", personasACargo=" + personasACargo +
+                ", cabezaDeFamilia=" + cabezaDeFamilia +
+                ", municipio=" + municipio +
+                ", vivienda=" + vivienda +
+                ", propiedades=" + propiedades +
+                '}';
     }
 }

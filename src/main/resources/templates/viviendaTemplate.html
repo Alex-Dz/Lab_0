@@ -44,16 +44,28 @@
           <div class="card-body">
               <form th:action="${edit} ? @{vivienda/update} : @{/vivienda/new}" th:object="${viviendaToSave}" method="POST">
                   <div class="form-group">
-                      <label for="id_viv">Matricual Catastal: </label>
-                      <input type="number" name="id_viv" id="id_viv" th:field="*{id}" class="form-control" placeholder="2023255548" required>
-                      <label for="id_mun">Numero de Municipio: </label>
-                      <input type="number" name="id_mun" id="id_mun" th:field="*{municipio}" class="form-control" placeholder="1023" required>
+                      <!--<label for="id_viv">Matricual Catastal: </label>
+                      <input type="number" name="id_viv" id="id_viv" th:field="*{id}" class="form-control" placeholder="2023255548" required>-->
                       <label for="direccion">Dirección: </label>
                       <input type="text" name="direccion" id="direccion" th:field="*{direccion}" class="form-control" placeholder="Calle 1 #2-3" required>
                       <label for="capacidad">Capacidad: </label>
                       <input type="number" name="capacidad" id="capacidad" th:field="*{capacidad}" class="form-control" placeholder="5" required>
                       <label for="niveles">Niveles: </label>
                       <input type="number" name="id_viv" id="niveles" th:field="*{niveles}" class="form-control" placeholder="3" required>
+                      <label for="municipio">Municipio: </label>
+                      <div th:if="${municipios} != null and ${edit} == null">
+                          <select class="form-select" name="municipio" id="municipio" th:field="*{municipio}" required>
+                              <option th:value="null" th:text="'--Ninguno--'" selected></option>
+                              <div th:each="municipio : ${municipios}">
+                                  <option th:value="${municipio.id}" th:text="${municipio.nombre}"></option>
+                              </div>
+                          </select>
+                      </div>
+                      <div th:if="${edit} != null or ${municipios} == null">
+                          <select class="form-select" name="CdF" id="CdF" disabled>
+                              <option th:value="null" th:text="'--Ninguno--'" selected></option>
+                          </select>
+                      </div>
                   </div>
                   <div class="box-footer">
                     <button class="btn btn-success">Guardar</button>
@@ -71,7 +83,7 @@
         <thead class="table-header">
             <tr>
                 <th>id_viv</th>
-                <th>id_num</th>
+                <!--<th>id_mun</th>-->
                 <th>direccion</th>
                 <th>capacidad</th>
                 <th>niveles</th>
@@ -83,7 +95,7 @@
           <div th:if="${viviendas} != null">
               <tr th:each="vivienda : ${viviendas}">
                   <td th:text="${vivienda.id}">id_viv</td>
-                  <td th:text="${vivienda.municipio}"></td>
+                  <!--<td th:text="${vivienda.municipio}"></td>-->
                   <td th:text="${vivienda.direccion}">direccion</td>
                   <td th:text="${vivienda.capacidad}">capacidad</td>
                   <td th:text="${vivienda.niveles}">niveles</td>

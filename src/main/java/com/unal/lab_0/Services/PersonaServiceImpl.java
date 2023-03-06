@@ -2,7 +2,9 @@ package com.unal.lab_0.Services;
 
 import com.unal.lab_0.Persistence.Model.Persona;
 import com.unal.lab_0.Persistence.PersonaRepository;
+import com.unal.lab_0.Services.Interfaces.MunicipioService;
 import com.unal.lab_0.Services.Interfaces.PersonaService;
+import com.unal.lab_0.Services.Interfaces.ViviendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ public class PersonaServiceImpl implements PersonaService {
 
     @Autowired
     PersonaRepository personaRepo;
+    @Autowired
+    ViviendaService viviendaService;
+    @Autowired
+    MunicipioService municipioService;
 
     @Override
     public Persona create(Persona personaToCreate) throws Exception {
@@ -67,7 +73,7 @@ public class PersonaServiceImpl implements PersonaService {
 
     @Override
     public Boolean existById(Integer id) throws Exception {
-        try{
+        try {
             return personaRepo.existsById(id);
         } catch (Exception e) {
             throw e;

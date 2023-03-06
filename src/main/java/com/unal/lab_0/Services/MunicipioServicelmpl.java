@@ -1,4 +1,5 @@
 package com.unal.lab_0.Services;
+
 import com.unal.lab_0.Persistence.Model.Municipio;
 import com.unal.lab_0.Persistence.MunicipioRepository;
 import com.unal.lab_0.Services.Interfaces.MunicipioService;
@@ -9,28 +10,67 @@ import java.util.List;
 
 @Service
 public class MunicipioServicelmpl implements MunicipioService {
+
+    @Autowired
+    MunicipioRepository municipioRepo;
+
     @Override
     public Municipio create(Municipio municipioToCreate) throws Exception {
-        return null;
+        try {
+            return municipioRepo.save(municipioToCreate);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
-    public Municipio findByNombre(String nombre) throws Exception {
-        return null;
+    public Municipio getByNombre(String nombre) throws Exception {
+        try {
+            return municipioRepo.findByNombreContains(nombre);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public Municipio getById(Integer id) throws Exception {
+        try {
+            return municipioRepo.findById(id).get();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     public Municipio edit(Municipio municipioToEdit) throws Exception {
-        return null;
+        return create(municipioToEdit);
     }
 
     @Override
     public Municipio delete(Integer id) throws Exception {
-        return null;
+        try {
+            Municipio reg = municipioRepo.findById(id).get();
+            municipioRepo.deleteById(id);
+            return reg;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     public List<Municipio> getAllMunicipios() throws Exception {
-        return null;
+        /*List<Municipio> municipios = new ArrayList<Municipio>();
+        municipioRepo.findAll().forEach(municipios::add);
+        return municipios;*/
+        return municipioRepo.findAllByIdIsNotNullOrderByNombre();
+    }
+
+    @Override
+    public boolean existByNombre(String nombre) throws Exception {
+        try {
+            return municipioRepo.existsByNombreIgnoreCase(nombre);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

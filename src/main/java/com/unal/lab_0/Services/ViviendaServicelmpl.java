@@ -15,7 +15,7 @@ public class ViviendaServicelmpl implements ViviendaService {
     ViviendaRepository viviendaRepo;
 
     @Override
-    public Vivienda create(Vivienda viviendaToCreate) throws Exception{
+    public Vivienda create(Vivienda viviendaToCreate) throws Exception {
         try {
             return viviendaRepo.save(viviendaToCreate);
         } catch (Exception e) {
@@ -24,22 +24,53 @@ public class ViviendaServicelmpl implements ViviendaService {
     }
 
     @Override
-    public Vivienda findByDireccion(String direccion) throws Exception {
-        return null;
+    public Vivienda getByDireccion(String direccion) throws Exception {
+        try {
+            return viviendaRepo.findByDireccionContains(direccion);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public Vivienda getById(Integer id) throws Exception {
+        try {
+            return viviendaRepo.findById(id).get();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     public Vivienda edit(Vivienda viviendaToEdit) throws Exception {
-        return null;
+        return create(viviendaToEdit);
     }
 
     @Override
     public Vivienda delete(Integer id) throws Exception {
-        return null;
+        try {
+            Vivienda reg = viviendaRepo.findById(id).get();
+            viviendaRepo.deleteById(id);
+            return reg;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     public List<Vivienda> getAllViviendas() throws Exception {
-        return null;
+        /*List<Vivienda> viviendas = new ArrayList<Vivienda>();
+        viviendaRepo.findAll().forEach(viviendas::add);
+        return viviendas;*/
+        return viviendaRepo.findAllByIdIsNotNullOrderByMunicipio();
+    }
+
+    @Override
+    public Boolean existByDireccion(String direccion) throws Exception {
+        try {
+            return viviendaRepo.existsByDireccionContains(direccion);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

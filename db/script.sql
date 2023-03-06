@@ -123,7 +123,7 @@ GO
 /* Table: MUNICIPIO                                             */
 /*==============================================================*/
 create table MUNICIPIO (
-   id_mun               int                  not null,
+   id_mun               int                  identity(1,1)   not null,
    nombre               varchar(45)          not null,
    area                 float                null,
    presupuesto          int                  null,
@@ -211,7 +211,7 @@ go
 /* Table: VIVIENDA                                              */
 /*==============================================================*/
 create table VIVIENDA (
-   id_viv               int                  not null,
+   id_viv               int                  identity(1,1)   not null,
    id_mun               int                  not null,
    direccion            varchar(45)          not null,
    capacidad            int                  not null,

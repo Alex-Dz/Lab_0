@@ -8,7 +8,9 @@ import java.util.List;
 
 @Repository
 public interface ViviendaRepository extends CrudRepository<Vivienda, Integer> {
-    Vivienda findBydireccionContains(String direccion);
+    Vivienda findByDireccionContains(String direccion);
 
-    List<Vivienda> findAllBy();
+    List<Vivienda> findAllByIdIsNotNullOrderByMunicipio();
+
+    boolean existsByDireccionContains(String direccion);
 }

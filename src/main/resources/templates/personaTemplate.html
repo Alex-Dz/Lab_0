@@ -54,6 +54,48 @@
                                 <input type="number" name="edad" id="edad" th:field="*{edad}" class="form-control" placeholder="18" required>
                                 <label for="sexo">Sexo: </label>
                                 <input type="text" name="sexo" id="sexo" th:field="*{sexo}" class="form-control" placeholder="Masculino o Femenino" required>
+                                <label for="vivienda">Vivienda: </label>
+                                <div th:if="${viviendas} != null and ${edit} == null">
+                                    <select class="form-select" name="vivienda" id="vivienda" th:field="*{vivienda}">
+                                        <option th:value="null" th:text="'--Ninguna--'" selected></option>
+                                        <div th:each="vivienda : ${viviendas}">
+                                            <option th:value="${vivienda.id}" th:text="${vivienda.direccion}"></option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <div th:if="${edit} != null or ${viviendas} == null">
+                                    <select class="form-select" name="vivienda" id="vivienda" disabled>
+                                        <option th:value="null" th:text="'--Ninguna--'" selected></option>
+                                    </select>
+                                </div>
+                                <label for="CdF">Cabeza de familia: </label>
+                                <div th:if="${personas} != null and ${edit} == null">
+                                    <select class="form-select" name="CdF" id="CdF" th:field="*{cabezaDeFamilia}">
+                                        <option th:value="null" th:text="'--Ninguna--'" selected></option>
+                                        <div th:each="persona : ${personas}">
+                                            <option th:value="${persona.id}" th:text="${persona.nombre}"></option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <div th:if="${edit} != null or ${personas} == null">
+                                    <select class="form-select" name="CdF" id="CdF" disabled>
+                                        <option th:value="null" th:text="'--Ninguna--'" selected></option>
+                                    </select>
+                                </div>
+                                <label for="propiedades">Propiedades: </label>
+                                <div th:if="${viviendas} != null and ${edit} == null">
+                                    <select class="form-select" name="propiedades" id="propiedades" th:field="*{propiedades}">
+                                        <option th:value="null" th:text="'--Ninguna--'" selected></option>
+                                        <div th:each="vivienda : ${viviendas}">
+                                            <option th:value="${vivienda.id}" th:text="${vivienda.direccion}"></option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <div th:if="${edit} != null or ${viviendas} == null">
+                                    <select class="form-select" name="propiedades" id="propiedades" disabled>
+                                        <option th:value="null" th:text="'--Ninguna--'" selected></option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="box-footer">
                                 <button class="btn btn-success">Guardar</button>
@@ -75,6 +117,7 @@
                     <th>telefono</th>
                     <th>edad</th>
                     <th>sexo</th>
+                    <!--<th>vivienda</th>-->
                     <th>editar</th>
                     <th>eliminar</th>
                 </tr>
@@ -87,6 +130,8 @@
                         <td th:text="${persona.telefono}">telefono</td>
                         <td th:text="${persona.edad}">edad</td>
                         <td th:text="${persona.sexo}">sexo</td>
+                        <!--<td th:text="${persona.vivienda}">vivienda</td>-->
+                        <!--<td th:unless="${persona.vivienda} != null" th:text="">vivienda</td>-->
                         <td><a th:href="'/persona/edit/' + ${persona.id}">editar</a></td>
                         <td><a th:href="'/persona/delete/' + ${persona.id}">eliminar</a></td>
                     </tr>

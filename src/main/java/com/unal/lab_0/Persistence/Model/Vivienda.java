@@ -1,16 +1,19 @@
 package com.unal.lab_0.Persistence.Model;
 
-import lombok.Data;
-
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
 @Entity
 @Table(name = "VIVIENDA")
-@Data
+@Getter
+@Setter
 public class Vivienda {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_viv")
     private Integer id;
     @Column(name = "direccion")
@@ -30,4 +33,17 @@ public class Vivienda {
 
     @ManyToMany(mappedBy = "propiedades")
     List<Persona> propietarios;
+
+    @Override
+    public final String toString() {
+        return "Vivienda{" +
+                "id=" + id +
+                ", direccion='" + direccion + '\'' +
+                ", capacidad=" + capacidad +
+                ", niveles=" + niveles +
+                ", municipio=" + municipio +
+                ", habitantes=" + habitantes +
+                ", propietarios=" + propietarios +
+                '}';
+    }
 }

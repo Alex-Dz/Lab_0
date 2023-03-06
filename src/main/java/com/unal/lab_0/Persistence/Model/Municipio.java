@@ -1,16 +1,19 @@
 package com.unal.lab_0.Persistence.Model;
 
-import lombok.Data;
-
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
 @Entity
 @Table(name = "MUNICIPIO")
-@Data
+@Getter
+@Setter
 public class Municipio {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_mun")
     private Integer id;
     @Column(name = "nombre")
@@ -26,4 +29,16 @@ public class Municipio {
 
     @OneToMany(mappedBy = "municipio", cascade = CascadeType.ALL)
     private List<Vivienda> viviendas;
+
+    @Override
+    public final String toString() {
+        return "Municipio{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", area=" + area +
+                ", presupuesto=" + presupuesto +
+                ", persona=" + persona +
+                ", viviendas=" + viviendas +
+                '}';
+    }
 }
