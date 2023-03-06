@@ -7,7 +7,7 @@
 
 - El aplicativo del CRUD se desarrolló usando spring boot con el motor de plantillas HTML Thymeleaf.
 
-Explicación en el link: 
+Explicación en el link: https://drive.google.com/file/d/16lpvgc8IiwQcoWRkj3UQ8heHALKmuI40/view?usp=sharing
 
 Desarrollado por:
 - Omar Camilo Sarmiento Valero
